@@ -24,14 +24,21 @@ const Navbar: React.FC = () => {
     { name: 'Contato', path: '/contato' },
   ];
 
+  // Cores dinâmicas baseadas no scroll
+  const navBg = isScrolled 
+    ? 'bg-slate-50/98 backdrop-blur-md shadow-md border-b border-slate-200/60 py-1' 
+    : 'bg-transparent py-4';
+  
+  const textColor = isScrolled ? 'text-slate-800' : 'text-white';
+  const logoVariant = isScrolled ? 'dark' : 'light';
+
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-slate-900/95 backdrop-blur-md shadow-lg border-b border-white/5 py-1' : 'bg-transparent py-4'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-500 ${navBg}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 sm:h-20">
           <Link to="/" className="transition-transform hover:opacity-90 active:scale-95 shrink-0">
-            {/* Logo otimizado para Navbar sem uso de scale CSS distorcivo */}
             <Logo 
-              variant="light" 
+              variant={logoVariant} 
               layout="horizontal"
               size="sm"
             />
@@ -43,10 +50,10 @@ const Navbar: React.FC = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`font-semibold text-sm uppercase tracking-widest transition-colors hover:text-inca-yellow ${
+                className={`font-semibold text-sm uppercase tracking-widest transition-colors ${
                   location.pathname === link.path 
                     ? 'text-inca-cyan' 
-                    : 'text-white'
+                    : `${textColor} hover:text-inca-cyan`
                 }`}
               >
                 {link.name}
@@ -64,7 +71,7 @@ const Navbar: React.FC = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-white p-2"
+              className={`${textColor} p-2 transition-colors`}
             >
               {isOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
             </button>
@@ -74,14 +81,16 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-slate-900 shadow-2xl absolute top-full left-0 w-full animate-in fade-in slide-in-from-top-4 duration-300 border-t border-white/10">
+        <div className={`md:hidden ${isScrolled ? 'bg-slate-50 border-t border-slate-200' : 'bg-slate-900'} shadow-2xl absolute top-full left-0 w-full animate-in fade-in slide-in-from-top-4 duration-300`}>
           <div className="px-4 pt-2 pb-6 space-y-1">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 onClick={() => setIsOpen(false)}
-                className="block px-3 py-4 text-base font-bold text-white hover:text-inca-yellow border-b border-white/5"
+                className={`block px-3 py-4 text-base font-bold border-b ${
+                  isScrolled ? 'text-slate-800 border-slate-200 hover:text-inca-blue' : 'text-white border-white/5 hover:text-inca-yellow'
+                }`}
               >
                 {link.name}
               </Link>
