@@ -1,0 +1,7 @@
+{
+  "name": "Copy of INCA Segurança Eletrônica",
+  "description": "Site institucional e plataforma de geração de leads para a INCA Segurança Eletrônica e Monitoramento, especializada em soluções de segurança para residências, empresas e áreas rurais.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
